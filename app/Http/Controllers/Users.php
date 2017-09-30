@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Mail\SignUp;
 use Illuminate\Http\Request;
+use Auth;
 
 class Users extends Controller
 {
@@ -54,5 +55,37 @@ class Users extends Controller
     public function getLogin(){
       return view('user.login');
     }
+
+    public function postLogin(Request $request){
+      $this->validate($request, [
+        'email'    => 'email|required',
+        'password' => 'required'
+      ]);
+
+      $email    = $request->input('email');
+      $password = $request->input('password');
+      $query = ['email'=>$email, 'password'=>$password];
+
+      $user = User::where($query)
+        ->first();
+
+      if ($user->exists) {
+        $confirmed = $user->confirmed;
+
+        if ($confirmed){
+          Auth::attempt($query);
+          \Session::flash('flash_message', 'You are now logged in');
+          return redirect()->route('user.profile');
+
+        } else {
+            \Session::flash('flash_warning', 'Account not activated, use your confirmation email to activate your account, or request a new confirmation email');
+            return redirect()->route('home');
+        }
+      }
+
+      \Session::flash('flash_warning', 'There is no account matching these credentials, please sign up');
+      return redirect()->route('user.signup');
+
+    } // end postLogin
 
 } //end of class

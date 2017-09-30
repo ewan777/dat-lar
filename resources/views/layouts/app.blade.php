@@ -16,12 +16,7 @@
       @include('partials.nav')
 
       <div class="container">
-        @if(Session::has('flash_message'))
-          <div class="alert alert-success alert-dismissable text-center">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            {{ Session::get('flash_message') }}
-          </div>
-        @endif
+        @include('partials.messages')
         @yield('content')
       </div>
 
