@@ -78,7 +78,7 @@ class Users extends Controller
             \Session::flash('flash_message', 'You are now logged in');
             return redirect()->route('user.profile');
           } else{
-              \Session::flash('flash_warning', 'wrong email or password');
+              \Session::flash('flash_warning', 'Wrong password');
               return redirect()->route('user.login');
           }
         } else {
