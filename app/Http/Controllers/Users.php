@@ -63,15 +63,18 @@ class Users extends Controller
       ]);
 
       $email    = $request->input('email');
-      $password = $request->input('password');
+      $password    = $request->input('password');
       $query = ['email'=>$email, 'password'=>$password];
 
-      $user = User::where($query)
+      $user = User::where('email', $email)
         ->first();
 
-      if ($user->exists) {
-        $confirmed = $user->confirmed;
+      if ($user === null) {
+        \Session::flash('flash_warning', 'There is no account matching these credentials, please sign up');
+        return redirect()->route('user.signup');
+      } else {
 
+        $confirmed = $user->confirmed;
         if ($confirmed){
           Auth::attempt($query);
           \Session::flash('flash_message', 'You are now logged in');
@@ -82,9 +85,6 @@ class Users extends Controller
             return redirect()->route('home');
         }
       }
-
-      \Session::flash('flash_warning', 'There is no account matching these credentials, please sign up');
-      return redirect()->route('user.signup');
 
     } // end postLogin
 

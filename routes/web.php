@@ -32,6 +32,11 @@ Route::get('/login', [
   'as'   => 'user.login'
 ]);
 
+Route::post('/login', [
+  'uses' => 'Users@postLogin',
+  'as'   => 'user.login'
+]);
+
 Route::get('/profile', [
   'uses' => 'Users@getProfile',
   'as' => 'user.profile'
