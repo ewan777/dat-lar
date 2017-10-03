@@ -64,8 +64,6 @@ class Users extends Controller
 
       $email    = $request->input('email');
       $password    = $request->input('password');
-      $query = ['email'=>$email, 'password'=>$password];
-
       $user = User::where('email', $email)
         ->first();
 
@@ -76,10 +74,13 @@ class Users extends Controller
 
         $confirmed = $user->confirmed;
         if ($confirmed){
-          Auth::attempt($query);
-          \Session::flash('flash_message', 'You are now logged in');
-          return redirect()->route('user.profile');
-
+          if (Auth::attempt(['email'=>$email,'password'=>$password])){
+            \Session::flash('flash_message', 'You are now logged in');
+            return redirect()->route('user.profile');
+          } else{
+              \Session::flash('flash_warning', 'wrong email or password');
+              return redirect()->route('user.login');
+          }
         } else {
             \Session::flash('flash_warning', 'Account not activated, use your confirmation email to activate your account, or request a new confirmation email');
             return redirect()->route('home');
