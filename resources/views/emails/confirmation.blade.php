@@ -12,7 +12,7 @@
     Please confirm your email by clicking on the following link:
   </p>
 
-  <a href="{{ url('registered').'/'.$confirmation_code  }}">
+  <a href="{{ url('user/registered').'/'.$confirmation_code  }}">
     Confirm Your Account
   </a>
 

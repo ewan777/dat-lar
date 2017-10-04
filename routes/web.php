@@ -17,32 +17,48 @@ Route::get('/', [
 ]);
 Route::get('/about', 'Pages@about');
 
-Route::get('/signup', [
-  'uses' => 'Users@getSignup',
-  'as'   => 'user.signup'
-]);
 
-Route::post('/signup', [
-  'uses' => 'Users@postSignup',
-  'as'   => 'user.signup'
-]);
+Route::group(['prefix'=>'user'], function(){
 
-Route::get('/login', [
-  'uses' => 'Users@getLogin',
-  'as'   => 'user.login'
-]);
+  Route::get('/signup', [
+    'uses' => 'Users@getSignup',
+    'as'   => 'user.signup',
+    'middleware' =>'guest'
+  ]);
 
-Route::post('/login', [
-  'uses' => 'Users@postLogin',
-  'as'   => 'user.login'
-]);
+  Route::post('/signup', [
+    'uses' => 'Users@postSignup',
+    'as'   => 'user.signup',
+    'middleware' =>'guest'
+  ]);
 
-Route::get('/profile', [
-  'uses' => 'Users@getProfile',
-  'as' => 'user.profile'
-]);
+  Route::get('/login', [
+    'uses' => 'Users@getLogin',
+    'as'   => 'user.login',
+    'middleware' =>'guest'
+  ]);
 
-Route::get('/registered/{confirmation_code}', [
-  'uses' => 'Users@getRegistered',
-  'as' => 'user.registered'
-]);
+  Route::post('/login', [
+    'uses' => 'Users@postLogin',
+    'as'   => 'user.login',
+    'middleware' =>'guest'
+  ]);
+
+  Route::get('/logout', [
+    'uses' => 'Users@getLogout',
+    'as'   => 'user.logout',
+    'middleware' =>'auth'
+  ]);
+
+  Route::get('/profile', [
+    'uses' => 'Users@getProfile',
+    'as' => 'user.profile',
+    'middleware' =>'auth'
+  ]);
+
+  Route::get('/registered/{confirmation_code}', [
+    'uses' => 'Users@getRegistered',
+    'as' => 'user.registered'
+  ]);
+
+});

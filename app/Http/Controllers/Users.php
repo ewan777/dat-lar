@@ -89,4 +89,10 @@ class Users extends Controller
 
     } // end postLogin
 
+    public function getLogout(){
+      Auth::logout();
+      \Session::flash('flash_message', 'You have successfully logged out');
+      return redirect()->route('home');
+    }
+
 } //end of class

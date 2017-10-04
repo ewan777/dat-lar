@@ -26,6 +26,9 @@
         <li>
           <a href="{{ route('user.login') }}"><span class="glyphicon glyphicon-log-in"></span> Login</a>
         </li>
+        <li>
+          <a href="{{ route('user.logout') }}"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+        </li>
       </ul>
 
     </div><!--/.nav-collapse -->
