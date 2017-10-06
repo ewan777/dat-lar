@@ -4,7 +4,7 @@
 <div class="row">
 <div class="col-md-6 col-md-offset-3">
   <h1 class="text-center">
-    Login
+    Resend Account Activation Email
   </h1>
   <hr>
 
@@ -19,11 +19,11 @@
     </div>
   @endif
 
-  <form class="form" action="{{ route('user.login') }}" method="post">
+  <form class="form" action="{{ route('user.resend_activation') }}" method="post">
     {{ csrf_field() }}
 
     <div class="form-group">
-      <label for="email">Email (not displayed)</label>
+      <label for="email">Email</label>
       <input class="form-control" type="email" name="email" id="email">
     </div>
 
@@ -32,12 +32,9 @@
       <input class="form-control" type="password" name="password" id="password">
     </div>
 
-    <button class="btn btn-success btn-block" type="submit" name="button">Login</button>
+    <button class="btn btn-success btn-block" type="submit" name="button">Send</button>
 
   </form>
-
-  <a style="padding-left: 0;" class="btn btn-primary btn-link" href="{{ route('user.resend_activation') }}">Resend Activation Email</a>
-
 
 </div>
 </div>

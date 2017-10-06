@@ -61,4 +61,14 @@ Route::group(['prefix'=>'user'], function(){
     'as' => 'user.registered'
   ]);
 
+  Route::get('/resend-activation', [
+    'uses' => 'Users@getResendActivation',
+    'as' => 'user.resend_activation'
+  ]);
+
+  Route::post('/resend-activation', [
+    'uses' => 'Users@postResendActivation',
+    'as' => 'user.resend_activation'
+  ]);
+
 });

@@ -51,6 +51,8 @@
 
   </form>
 
+  <a style="padding-left: 0;" class="btn btn-primary btn-link" href="{{ route('user.resend_activation') }}">Resend Activation Email</a>
+
 
 </div>
 </div>

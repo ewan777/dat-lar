@@ -95,4 +95,37 @@ class Users extends Controller
       return redirect()->route('home');
     }
 
+
+    public function getResendActivation(){
+      return view('user.resend_activation');
+    }
+
+    public function postResendActivation(Request $request){
+      $this->validate($request, [
+        'email'    => 'email|required',
+        'password' => 'required'
+      ]);
+
+      $email    = $request->input('email');
+      $password    = $request->input('password');
+      $user = User::where('email', $email)
+        ->first();
+
+      if ($user === null) {
+        \Session::flash('flash_warning', 'There is no account matching these credentials, please sign up');
+        return redirect()->route('user.signup');
+      } else {
+
+        $confirmed = $user->confirmed;
+        if ($confirmed){
+            \Session::flash('flash_message', 'Your account is already activated, you can login');
+            return redirect()->route('user.login');
+        } else{
+          \Mail::to($user->email)->send(new SignUp($user->confirmation_code));
+          \Session::flash('flash_message', 'you will receive a confirmation email shortly');
+          return redirect()->route('home');
+        }
+      }
+    }
+
 } //end of class
