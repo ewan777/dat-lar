@@ -71,4 +71,24 @@ Route::group(['prefix'=>'user'], function(){
     'as' => 'user.resend_activation'
   ]);
 
+  Route::get('/reset-password', [
+    'uses' => 'Users@getResetPassword',
+    'as' => 'user.reset_password'
+  ]);
+
+  Route::post('/reset-password', [
+    'uses' => 'Users@postResetPassword',
+    'as' => 'user.reset_password'
+  ]);
+
+  Route::get('/new-password/{reset_code}', [
+    'uses' => 'Users@getNewPassword',
+    'as' => 'user.new_password'
+  ]);
+
+  Route::post('/new-password', [
+    'uses' => 'Users@postNewPassword',
+    'as' => 'user.new_password'
+  ]);
+
 });

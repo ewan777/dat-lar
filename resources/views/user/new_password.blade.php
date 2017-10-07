@@ -4,7 +4,7 @@
 <div class="row">
 <div class="col-md-6 col-md-offset-3">
   <h1 class="text-center">
-    Login
+    Reset Password
   </h1>
   <hr>
 
@@ -19,26 +19,24 @@
     </div>
   @endif
 
-  <form class="form" action="{{ route('user.login') }}" method="post">
+  <form class="form" action="{{ route('user.new_password') }}" method="post">
     {{ csrf_field() }}
 
-    <div class="form-group">
-      <label for="email">Email (not displayed)</label>
-      <input class="form-control" type="email" name="email" id="email">
-    </div>
+    <input name="user_id" type="hidden" value="{{ $id }}">
 
     <div class="form-group">
       <label for="password">Password</label>
       <input class="form-control" type="password" name="password" id="password">
     </div>
 
-    <button class="btn btn-success btn-block" type="submit" name="button">Login</button>
+    <div class="form-group">
+      <label for="password_confirmation">Confirm Password</label>
+      <input class="form-control" type="password" name="password_confirmation" id="password_confirmation">
+    </div>
+
+    <button class="btn btn-success btn-block" type="submit" name="button">Reset Password</button>
 
   </form>
-
-  <a style="padding-left:0;" class="btn btn-link" href="{{ route('user.resend_activation') }}">Resend Activation Email</a><br>
-
-  <a style="padding-left:0; position:relative; bottom:10px;" class="btn btn-link" href="{{ route('user.reset_password') }}">Reset Password</a>
 
 
 </div>

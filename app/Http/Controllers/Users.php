@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Mail\SignUp;
+use App\Mail\ResetPassword;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -127,5 +128,62 @@ class Users extends Controller
         }
       }
     }
+
+    public function getResetPassword(){
+      return view('user.reset_password');
+    }
+
+    public function postResetPassword(Request $request){
+      $this->validate($request, [
+        'email'    => 'email|required'
+      ]);
+
+      $email = $request->input('email');
+      $user  = User::where('email', $email)
+        ->first();
+      $reset_code = str_random(40);
+
+      if ($user === null) {
+        \Session::flash('flash_warning', 'There is no account matching these credentials, please sign up');
+        return redirect()->route('user.signup');
+      } else {
+        $user->reset_code = $reset_code;
+        $user->save();
+        \Mail::to($user->email)->send(new ResetPassword($reset_code));
+        \Session::flash('flash_message', 'password reset email sent');
+        return redirect()->route('home');
+      }
+
+    }
+
+    public function getNewPassword($reset_code){
+      $user = User::where('reset_code', $reset_code)
+        ->first();
+      return view('user.new_password')->with('id', $user->id);
+    }
+
+
+    public function postNewPassword(Request $request){
+      $this->validate($request, [
+        'password' => 'required|confirmed|min:8'
+      ]);
+
+      $password = bcrypt($request->input('password'));
+      $user_id  = $request->input('user_id');
+      $user     = User::where('id', $user_id)
+        ->first();
+
+      if ($user === null) {
+        \Session::flash('flash_warning', 'There is no account matching these credentials, please sign up');
+        return redirect()->route('user.signup');
+      } else {
+        $user->password = $password;
+        $user->save();
+        \Session::flash('flash_message', 'Password has been reset');
+        return redirect()->route('user.login');
+      }
+
+    }
+
 
 } //end of class

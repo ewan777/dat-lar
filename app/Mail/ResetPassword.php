@@ -7,18 +7,20 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class ResendActivation extends Mailable
+class ResetPassword extends Mailable
 {
     use Queueable, SerializesModels;
+
+    public $reset_code;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($reset_code)
     {
-        //
+        $this->reset_code = $reset_code;
     }
 
     /**
@@ -29,6 +31,6 @@ class ResendActivation extends Mailable
     public function build()
     {
         return $this->from('app.mailer01@gmail.com')
-          ->view('emails.resend_activation');
+          ->view('emails.new_password');
     }
 }
