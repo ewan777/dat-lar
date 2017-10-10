@@ -7,8 +7,8 @@
 
         <title>My App</title>
         <!-- Fonts -->
-        {{-- <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css"> --}}
-        {{-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> --}}
+        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     </head>
 
     <body>
@@ -16,6 +16,7 @@
         @yield('content')
       </div>
 
-      {{-- <script type="text/javascript" src="{{ asset('js/app.js') }}"></script> --}}
+      <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+      @yield('scripts')
     </body>
 </html>

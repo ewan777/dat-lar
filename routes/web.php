@@ -91,4 +91,14 @@ Route::group(['prefix'=>'user'], function(){
     'as' => 'user.new_password'
   ]);
 
-});
+});  //end of user route group
+
+Route::get('/payment', [
+  'uses' => 'Payments@getPayment',
+  'as' => 'payment'
+]);
+
+Route::post('/payment', [
+  'uses' => 'Payments@postPayment',
+  'as' => 'payment'
+]);
