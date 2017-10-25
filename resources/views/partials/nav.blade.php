@@ -22,17 +22,17 @@
       <ul class="nav navbar-nav navbar-right">
         @if(Auth::check())
           <li>
-            <a href="{{ route('user.profile') }}"><span class="glyphicon glyphicon-user"></span> &nbsp;Profile</a>
+            <a href="{{ route('user.profile') }}"><span class="glyphicon glyphicon-user"></span> Profile</a>
           </li>
           <li>
-            <a href="{{ route('user.logout') }}"><span class="glyphicon glyphicon-log-out"></span> &nbsp;Logout</a>
+            <a href="{{ route('user.logout') }}"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
           </li>
         @else
           <li>
-            <a href="{{ route('user.signup') }}"><span class="glyphicon glyphicon-user"></span> &nbsp;Sign Up</a>
+            <a href="{{ route('user.signup') }}"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
           </li>
           <li>
-            <a href="{{ route('user.login') }}"><span class="glyphicon glyphicon-log-in"></span> &nbsp;Login</a>
+            <a href="{{ route('user.login') }}"><span class="glyphicon glyphicon-log-in"></span> Login</a>
           </li>
         @endif
       </ul>
