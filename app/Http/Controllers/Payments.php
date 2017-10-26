@@ -22,7 +22,7 @@ class Payments extends Controller
       Charge::create(array(
         "amount"=>30 * 100,
         "currency"=>"usd",
-        "source"=>$request->input('stripeToken'),
+        "source"=>$token,
         "description"=>"testing testing"
       ));
     } catch(\Exception $e){

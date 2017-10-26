@@ -3,11 +3,11 @@ var $form = $('#payment_form');
 
 $form.submit(function(event) {
     $('#charge_error').addClass('hidden');
+
     // Disable the submit button to prevent repeated clicks:
-
     $form.find('button').prop('disabled', true);
-    // Request a token from Stripe:
 
+    // Request a token from Stripe:
     Stripe.card.createToken({
       name:      $('#card-name').val(),
       number:    $('#card-number').val(),
