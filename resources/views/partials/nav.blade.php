@@ -22,6 +22,9 @@
       <ul class="nav navbar-nav navbar-right">
         @if(Auth::check())
           <li>
+            <a href="{{ route('payment') }}">VIP</a>
+          </li>
+          <li>
             <a href="{{ route('user.profile') }}"><span class="glyphicon glyphicon-user"></span> Profile</a>
           </li>
           <li>

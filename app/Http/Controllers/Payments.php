@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Stripe\Stripe;
 use Stripe\Charge;
+use App\User;
+use App\Membership;
+use Auth;
 
 class Payments extends Controller
 {
@@ -19,19 +22,31 @@ class Payments extends Controller
     $token = $request->input('stripeToken');
 
     try {
-      Charge::create(array(
+      $charge = Charge::create(array(
         "amount"=>30 * 100,
         "currency"=>"usd",
         "source"=>$token,
         "description"=>"testing testing"
       ));
+
+      $user = Auth::user();
+      $user_id = $user->id;
+      $date = new \DateTime();
+      $expires = $date->modify('+1 year');
+
+      $membership = new Membership();
+      $membership->user_id = $user_id;
+      $membership->payment_id = $charge->id;
+      $membership->expires = $expires;
+      $membership->save();
+
     } catch(\Exception $e){
         \Session::flash('flash_warning', $e->getMessage());
         return redirect()->route('payment');
     }
 
-    \Session::flash('flash_message', 'Payment Accepted');
-    return redirect()->route('home');
+    \Session::flash('flash_message', 'Payment Accepted, You Now Have VIP Privileges');
+    return redirect()->route('user.profile');
 
   }
 
