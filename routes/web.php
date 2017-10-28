@@ -102,3 +102,9 @@ Route::post('/payment', [
   'uses' => 'Payments@postPayment',
   'as' => 'payment'
 ]);
+
+Route::get('/member-page', [
+  'uses' => 'Memberships@getMemberPage',
+  'as' => 'member_page',
+  'middleware' =>'member'
+]);

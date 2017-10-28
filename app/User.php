@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use App\Membership;
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -31,4 +33,12 @@ class User extends Authenticatable
       return $this->hasOne('App\Membership');
     }
 
-}
+    public function hasMembership(){
+      $membership = Membership::where('user_id', $this->id)->first();
+      if ($membership){
+        return true;
+      }
+      return false;
+    }
+
+}  //end User class
