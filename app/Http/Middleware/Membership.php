@@ -16,15 +16,21 @@ class Membership
     public function handle($request, Closure $next)
     {
         if ($request->user() == null) {
-          // return response("Insufficient Permissions", 401);
           \Session::flash('flash_warning', 'Insufficient Permissions');
           return redirect()->route('home');
         }
-        if ($request->user()->hasMembership()){
-          return $next($request);
+
+        if($request->user()->hasMembership()){
+
+          if($request->user()->membershipExpired()){
+            \Session::flash('flash_warning', 'Your membership has expired');
+            return redirect()->route('home');
+          } else{
+            return $next($request);
+          }
         }
+
         \Session::flash('flash_warning', 'Insufficient Permissions');
         return redirect()->route('home');
-        // return response("Insufficient Permissions", 401);
     }
 }

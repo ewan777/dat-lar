@@ -23,7 +23,7 @@
         @if(Auth::check())
           @if(Auth::user()->hasMembership())
             <li>
-              <a href="{{ route('member_page') }}">Members</a>
+              <a href="{{ route('member_page') }}">Members Area</a>
             </li>
           @else
             <li>

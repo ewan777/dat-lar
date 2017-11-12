@@ -39,4 +39,19 @@ class User extends Authenticatable
       return false;
     }
 
+    public function membershipExpired(){
+      $membership  = $this->membership()->where('user_id', $this->id)->first();
+      $expiry_date_string = $membership->expires;
+      $today              = new \DateTime();
+      $expiry_date        = new \DateTime($expiry_date_string);
+
+      if ($today > $expiry_date){
+        return true;
+      } else{
+        return false;
+      }
+
+    } //end membershipExpired function
+
+
 }  //end User class
