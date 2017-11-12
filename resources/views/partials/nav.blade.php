@@ -21,12 +21,15 @@
 
       <ul class="nav navbar-nav navbar-right">
         @if(Auth::check())
-          <li>
-            <a href="{{ route('payment') }}">Join</a>
-          </li>
-          <li>
-            <a href="{{ route('member_page') }}">Members</a>
-          </li>
+          @if(Auth::user()->hasMembership())
+            <li>
+              <a href="{{ route('member_page') }}">Members</a>
+            </li>
+          @else
+            <li>
+              <a href="{{ route('payment') }}">Join</a>
+            </li>
+          @endif
           <li>
             <a href="{{ route('user.profile') }}"><span class="glyphicon glyphicon-user"></span> Profile</a>
           </li>

@@ -13,6 +13,14 @@ class Payments extends Controller
 {
 
   public function getPayment(){
+    if (Auth::user() == null) {
+      \Session::flash('flash_warning', 'Insufficient Permissions');
+      return redirect()->route('home');
+    }
+    if (Auth::user()->hasMembership()){
+      \Session::flash('flash_message', 'You already have membership');
+      return redirect()->route('home');
+    }
     return view('payment.pay');
   }
 
