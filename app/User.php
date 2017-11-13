@@ -50,8 +50,12 @@ class User extends Authenticatable
       } else{
         return false;
       }
-
     } //end membershipExpired function
+
+    public function removeMembership(){
+      $membership  = $this->membership()->where('user_id', $this->id)->first();
+      $membership->delete();
+    }
 
 
 }  //end User class
