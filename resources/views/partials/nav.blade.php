@@ -38,7 +38,7 @@
           </li>
         @else
           <li>
-            <a href="{{ route('user.signup') }}"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
+            <a href="{{ route('user.register') }}"><span class="glyphicon glyphicon-user"></span> Register</a>
           </li>
           <li>
             <a href="{{ route('user.login') }}"><span class="glyphicon glyphicon-log-in"></span> Login</a>

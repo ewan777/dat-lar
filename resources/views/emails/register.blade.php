@@ -4,16 +4,16 @@
 <div class="row">
 <div class="col-md-6 col-md-offset-3">
   <h1 class="text-center">
-     <h1>Confirmation Email</h1>
+     <h1>Registration Email</h1>
   </h1>
   <hr>
 
   <p class="lead">
-    Please confirm your email by clicking on the following link:
+    Complete your registration by clicking the following link:
   </p>
 
   <a href="{{ url('user/registered').'/'.$confirmation_code  }}">
-    Confirm Your Account
+    Complete your registration
   </a>
 
 </div>

@@ -20,15 +20,15 @@ Route::get('/about', 'Pages@about');
 
 Route::group(['prefix'=>'user'], function(){
 
-  Route::get('/signup', [
-    'uses' => 'Users@getSignup',
-    'as'   => 'user.signup',
+  Route::get('/register', [
+    'uses' => 'Users@getRegister',
+    'as'   => 'user.register',
     'middleware' =>'guest'
   ]);
 
-  Route::post('/signup', [
-    'uses' => 'Users@postSignup',
-    'as'   => 'user.signup',
+  Route::post('/register', [
+    'uses' => 'Users@postRegister',
+    'as'   => 'user.register',
     'middleware' =>'guest'
   ]);
 

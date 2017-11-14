@@ -4,7 +4,7 @@
 <div class="row">
 <div class="col-md-6 col-md-offset-3">
   <h1 class="text-center">
-    Sign Up
+    Register
   </h1>
   <hr>
 
@@ -19,7 +19,7 @@
     </div>
   @endif
 
-  <form class="form" action="{{ route('user.signup') }}" method="post">
+  <form class="form" action="{{ route('user.register') }}" method="post">
     {{ csrf_field() }}
 
     <div class="form-group">
@@ -30,6 +30,14 @@
     <div class="form-group">
       <label for="username">Username</label>
       <input class="form-control" type="text" name="username" id="username">
+    </div>
+
+    <div class="form-group">
+      <label for="sex">Gender</label>
+      <select class="form-control" name="sex" id="sex">
+        <option>male</option>
+        <option>female</option>
+      </select>
     </div>
 
     <div class="form-group">

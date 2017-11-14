@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\Mail\SignUp;
+use App\Mail\Register;
 use App\Mail\ResetPassword;
 use Illuminate\Http\Request;
 use Auth;
@@ -11,14 +11,15 @@ use Auth;
 class Users extends Controller
 {
 
-    public function getSignup(){
-      return view('user.signup');
+    public function getRegister(){
+      return view('user.register');
     }
 
-    public function postSignup(Request $request){
+    public function postRegister(Request $request){
       $this->validate($request, [
         'name'     => 'required',
         'username' => 'required|unique:users',
+        'sex'      => 'required',
         'email'    => 'email|required|unique:users',
         'password' => 'required|confirmed|min:8'
       ]);
@@ -26,16 +27,17 @@ class Users extends Controller
       $confirmation_code = str_random(40);
 
       $user = new User([
-        'name'=>$request->input('name'),
-        'username'=>$request->input('username'),
-        'email'=>$request->input('email'),
-        'password'=>bcrypt($request->input('password')),
-        'confirmation_code'=>$confirmation_code
+        'name'=>              $request->input('name'),
+        'username'=>          $request->input('username'),
+        'sex'=>               $request->input('sex'),
+        'email'=>             $request->input('email'),
+        'password'=>          bcrypt($request->input('password')),
+        'confirmation_code'=> $confirmation_code
       ]);
       $user->save();
 
-      \Mail::to($user->email)->send(new SignUp($user->confirmation_code));
-      \Session::flash('flash_message', 'you will receive a confirmation email shortly');
+      \Mail::to($user->email)->send(new Register($user->confirmation_code));
+      \Session::flash('flash_message', 'you will receive a registration email shortly');
       return redirect()->route('home');
     }
 

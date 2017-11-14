@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class SignUp extends Mailable
+class Register extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -31,6 +31,6 @@ class SignUp extends Mailable
     public function build()
     {
       return $this->from('app.mailer01@gmail.com')
-        ->view('emails.confirmation');
+        ->view('emails.register');
     }
 }

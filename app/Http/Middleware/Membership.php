@@ -26,10 +26,8 @@ class Membership
           if($request->user()->membershipExpired()){
             $request->user()->removeMembership();
             $username = $request->user()->username;
-
             \Mail::to($request->user()->email)
             ->send(new MembershipExpired($username));
-
             \Session::flash('flash_warning', 'Your membership has expired');
             return redirect()->route('home');
           } else{
