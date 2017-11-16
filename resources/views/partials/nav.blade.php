@@ -31,7 +31,7 @@
             </li>
           @endif
           <li>
-            <a href="{{ route('user.profile') }}"><span class="glyphicon glyphicon-user"></span> Profile</a>
+            <a href="{{ route('profile') }}"><span class="glyphicon glyphicon-user"></span> Profile</a>
           </li>
           <li>
             <a href="{{ route('user.logout') }}"><span class="glyphicon glyphicon-log-out"></span> Logout</a>

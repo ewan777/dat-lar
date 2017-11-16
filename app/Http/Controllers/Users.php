@@ -41,10 +41,6 @@ class Users extends Controller
       return redirect()->route('home');
     }
 
-    public function getProfile(Request $request){
-      return view('user.profile');
-    }
-
     public function getRegistered($confirmation_code){
       $user = User::where('confirmation_code', $confirmation_code)
         ->first();
@@ -79,7 +75,7 @@ class Users extends Controller
         if ($confirmed){
           if (Auth::attempt(['email'=>$email,'password'=>$password])){
             \Session::flash('flash_message', 'You are now logged in');
-            return redirect()->route('user.profile');
+            return redirect()->route('profile');
           } else{
               \Session::flash('flash_warning', 'Wrong password');
               return redirect()->route('user.login');

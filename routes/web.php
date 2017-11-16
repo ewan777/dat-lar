@@ -50,11 +50,6 @@ Route::group(['prefix'=>'user'], function(){
     'middleware' =>'auth'
   ]);
 
-  Route::get('/profile', [
-    'uses' => 'Users@getProfile',
-    'as' => 'user.profile',
-    'middleware' =>'auth'
-  ]);
 
   Route::get('/registered/{confirmation_code}', [
     'uses' => 'Users@getRegistered',
@@ -108,3 +103,24 @@ Route::get('/member-page', [
   'as' => 'member_page',
   'middleware' =>'member'
 ]);
+
+Route::group(['prefix'=>'profile'], function(){
+  Route::get('/', [
+    'uses' => 'Profiles@getProfile',
+    'as' => 'profile',
+    'middleware' =>'auth'
+  ]);
+
+  Route::get('/new', [
+    'uses' => 'Profiles@getNew',
+    'as' => 'profile.new',
+    'middleware' =>'auth'
+  ]);
+
+  Route::post('/new', [
+    'uses' => 'Profiles@postNew',
+    'as' => 'profile.create',
+    'middleware' =>'auth'
+  ]);
+
+});
