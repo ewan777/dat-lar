@@ -31,10 +31,6 @@ class User extends Authenticatable
       return $this->hasOne('App\Membership');
     }
 
-    public function profile(){
-      return $this->hasOne('App\Profile');
-    }
-
     public function hasMembership(){
       $membership = $this->membership()->where('user_id', $this->id)->first();
       if ($membership){
@@ -59,6 +55,18 @@ class User extends Authenticatable
     public function removeMembership(){
       $membership  = $this->membership()->where('user_id', $this->id)->first();
       $membership->delete();
+    }
+
+    public function profile(){
+      return $this->hasOne('App\Profile');
+    }
+
+    public function hasProfile(){
+      $profile = $this->profile()->where('user_id', $this->id)->first();
+      if ($profile){
+        return true;
+      }
+      return false;
     }
 
 
