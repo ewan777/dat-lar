@@ -45,5 +45,17 @@ class Profiles extends Controller
     return redirect()->route('profile');
   }
 
+  public function getEdit(){
+    if(\Auth::user()->hasProfile()){
+      return view('profile.edit');
+    } else{
+       return view('profile.start');
+    }
+  }
+
+  public function postEdit(){
+
+  }
+
 
 } //end class

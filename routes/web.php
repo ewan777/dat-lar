@@ -123,4 +123,16 @@ Route::group(['prefix'=>'profile'], function(){
     'middleware' =>'auth'
   ]);
 
+  Route::get('/edit', [
+    'uses' => 'Profiles@getEdit',
+    'as' => 'profile.edit',
+    'middleware' =>'auth'
+  ]);
+
+  Route::post('/edit', [
+    'uses' => 'Profiles@postEdit',
+    'as' => 'profile.update',
+    'middleware' =>'auth'
+  ]);
+
 });
