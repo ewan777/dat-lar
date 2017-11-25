@@ -21,10 +21,11 @@
 
   <form class="form" action="{{ route('profile.update') }}" method="post">
     {{ csrf_field() }}
+    <input type="hidden" name="_method" value="PUT">
 
     <div class="form-group">
       <label for="about_me">About Me</label>
-      <textarea class="form-control" name="about_me" id="about_me">{{ $profile->about_me }}</textarea>
+      <textarea rows="5" class="form-control" name="about_me" id="about_me">{{ $profile->about_me }}</textarea>
     </div>
 
     <div class="form-group">
@@ -44,7 +45,7 @@
 
     <div class="form-group">
       <label for="looking_for">What I Am Looking For</label>
-      <textarea class="form-control" name="looking_for" id="looking_for">{{ $profile->looking_for }}</textarea>
+      <textarea rows="5" class="form-control" name="looking_for" id="looking_for">{{ $profile->looking_for }}</textarea>
     </div>
 
     <button class="btn btn-success btn-block" type="submit" name="button">Update</button>

@@ -105,6 +105,7 @@ Route::get('/member-page', [
 ]);
 
 Route::group(['prefix'=>'profile'], function(){
+
   Route::get('/', [
     'uses' => 'Profiles@getProfile',
     'as' => 'profile',
@@ -129,8 +130,8 @@ Route::group(['prefix'=>'profile'], function(){
     'middleware' =>'auth'
   ]);
 
-  Route::post('/edit', [
-    'uses' => 'Profiles@postEdit',
+  Route::put('/edit', [
+    'uses' => 'Profiles@putEdit',
     'as' => 'profile.update',
     'middleware' =>'auth'
   ]);

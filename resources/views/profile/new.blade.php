@@ -24,7 +24,7 @@
 
     <div class="form-group">
       <label for="about_me">About Me</label>
-      <textarea class="form-control" name="about_me" id="about_me"></textarea>
+      <textarea rows="5" class="form-control" name="about_me" id="about_me"></textarea>
     </div>
 
     <div class="form-group">
@@ -44,7 +44,7 @@
 
     <div class="form-group">
       <label for="looking_for">What I Am Looking For</label>
-      <textarea class="form-control" name="looking_for" id="looking_for"></textarea>
+      <textarea rows="5" class="form-control" name="looking_for" id="looking_for"></textarea>
     </div>
 
     <button class="btn btn-success btn-block" type="submit" name="button">Create Your Profile</button>

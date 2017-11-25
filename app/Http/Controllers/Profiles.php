@@ -56,8 +56,22 @@ class Profiles extends Controller
     }
   }
 
-  public function postEdit(){
+  public function putEdit(Request $request){
+    $this->validate($request, [
+      'age_group'   => 'required',
+      'nationality' => 'required'
+    ]);
 
+    Profile::where('user_id', \Auth::user()->id)
+      ->update([
+        'age_group'   => $request->input('age_group'),
+        'nationality' => $request->input('nationality'),
+        'about_me'    => $request->input('about_me'),
+        'looking_for' => $request->input('looking_for')
+      ]);
+
+    \Session::flash('flash_message', 'Your profile has been updated');
+    return redirect()->route('profile');
   }
 
 
