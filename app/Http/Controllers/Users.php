@@ -68,7 +68,7 @@ class Users extends Controller
 
       if ($user === null) {
         \Session::flash('flash_warning', 'There is no account matching these credentials, please sign up');
-        return redirect()->route('user.signup');
+        return redirect()->route('user.register');
       } else {
 
         $confirmed = $user->confirmed;

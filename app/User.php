@@ -69,15 +69,6 @@ class User extends Authenticatable
       return false;
     }
 
-    public function canModifyProfile(){
-      $profile = $this->profile()->where('user_id', $this->id)->first();
-      $user_id = $profile->user_id;
-      if ($this->id == $user_id){
-        return true;
-      } else {
-        return false;
-      }
-    }
 
 
 }  //end User class

@@ -54,7 +54,7 @@ class Payments extends Controller
     }
 
     \Session::flash('flash_message', 'Payment Accepted, You Now Have VIP Privileges');
-    return redirect()->route('user.profile');
+    return redirect()->route('profile');
 
   }
 

@@ -24,27 +24,27 @@
 
     <div class="form-group">
       <label for="about_me">About Me</label>
-      <textarea class="form-control" name="about_me" id="about_me">{{ Auth::user()->profile->about_me }}</textarea>
+      <textarea class="form-control" name="about_me" id="about_me">{{ $profile->about_me }}</textarea>
     </div>
 
     <div class="form-group">
       <label for="age_group">Age Group</label>
       <select class="form-control" name="age_group" id="age_group">
-        <option {{(Auth::user()->profile->age_group == '18-25') ? 'selected':''}} >18-25</option>
-        <option {{(Auth::user()->profile->age_group == '26-35') ? 'selected':''}}>26-35</option>
-         <option {{(Auth::user()->profile->age_group == '36-45') ? 'selected':''}}>36-45</option>
-         <option {{(Auth::user()->profile->age_group == 'Over 45') ? 'selected':''}} >Over 45</option>
+        <option {{( $profile->age_group == '18-25') ? 'selected':''}} >18-25</option>
+        <option {{( $profile->age_group == '26-35') ? 'selected':''}} >26-35</option>
+        <option {{( $profile->age_group == '36-45') ? 'selected':''}} >36-45</option>
+        <option {{( $profile->age_group == 'Over 45') ? 'selected':''}}>Over 45</option>
       </select>
     </div>
 
     <div class="form-group">
       <label for="nationality">Nationality</label>
-      <input value="{{ Auth::user()->profile->nationality }}" class="form-control" type="text" name="nationality" id="nationality">
+      <input value="{{ $profile->nationality }}" class="form-control" type="text" name="nationality" id="nationality">
     </div>
 
     <div class="form-group">
       <label for="looking_for">What I Am Looking For</label>
-      <textarea class="form-control" name="looking_for" id="looking_for">{{ Auth::user()->profile->looking_for }}</textarea>
+      <textarea class="form-control" name="looking_for" id="looking_for">{{ $profile->looking_for }}</textarea>
     </div>
 
     <button class="btn btn-success btn-block" type="submit" name="button">Update</button>

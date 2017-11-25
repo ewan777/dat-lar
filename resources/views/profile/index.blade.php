@@ -2,17 +2,18 @@
 @section('content')
 
   <h1 class="text-center">
-    Welcome {{ Auth::user()->username }}
+    Welcome {{ $profile->username }}
   </h1>
   <hr>
 
   <div class="row">
 
     <div class="col-md-6">
-      @if (Auth::user()->canModifyProfile())
-        <a style="position:relative; right:10px;" class="btn btn-link" href="{{ route('profile.edit') }}">[ Edit Profile ]</a>
-        <a style="position:relative; left: -30px" class="btn btn-link" href="{{ route('profile.edit') }}">[ Upload Image ]</a>
+      @if (\Auth::user()->id == $profile->user_id)
+        <a style="position:relative; left:2px;" class="btn btn-link" href="{{ route('profile.edit') }}">[ Edit Profile ]</a>
+        <a style="position:relative; left:-10px" class="btn btn-link" href="{{ route('profile.edit') }}">[ Upload Image ]</a>
       @endif
+
       <div class="row"> <!-- mini row  -->
 
         <div class="col-sm-6">
@@ -21,10 +22,10 @@
 
         <div class="col-sm-6">
           <div class="well" style="width:auto; height:250px;">
-            <h4>{{ Auth::user()->username }}</h4><hr>
-            <p>Sex: {{ Auth::user()->sex}} </p>
-            <p>Age Group: {{ Auth::user()->profile->age_group }} </p>
-            <p>Nationality: {{ Auth::user()->profile->nationality }}</p>
+            <h4>{{ $profile->username }}</h4><hr>
+            <p>Sex: {{ ucfirst($profile->sex) }} </p>
+            <p>Age Group: {{ $profile->age_group }} </p>
+            <p>Nationality: {{ $profile->nationality }}</p>
           </div>
         </div> <!-- end cols  -->
 
@@ -39,7 +40,7 @@
       <div class="well">
         <h4 class="text-center">About Me</h4>
         <hr>
-        <p class="">{{ Auth::user()->profile->about_me }}</p>
+        <p class="">{{ $profile->about_me }}</p>
       </div>
     </div> <!-- end cols  -->
 
@@ -54,7 +55,7 @@
       <div class="well">
         <h4 class="text-center">What I Am Looking For</h4>
         <hr>
-        <p class="">{{ Auth::user()->profile->looking_for }}</p>
+        <p class="">{{ $profile->looking_for }}</p>
       </div>
     </div> <!-- end cols  -->
 
