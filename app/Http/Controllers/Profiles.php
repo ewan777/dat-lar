@@ -81,7 +81,7 @@ class Profiles extends Controller
 
   public function saveImage(Request $request){
     $this->validate($request, [
-      'profile_pic'   => 'image|dimensions:min_width=100,min_height=200|max:1000',
+      'profile_pic'   => 'required|image|dimensions:min_width=100,min_height=100|max:1000',
     ]);
     $user = \Auth::user();
     $file = $request->file('profile_pic');

@@ -25,7 +25,7 @@
         <a class="center-block btn btn-link" href="{{ route('profile.upload_image')}}">[ Upload/Change Image ]</a>
       @endif
 
-      <img class="img-thumbnail img-responsive center-block" src="{{ route('profile.profile_pic', ['filename'=>$profile->image_name]) }}" alt="user-image" height="300" width="300">
+      <img class="img-thumbnail img-responsive center-block" src="{{ route('profile.profile_pic', ['filename'=>$profile->image_name]) }}" alt="user-image" width="350">
 
     </div> <!-- end cols  -->
   </div> <!-- end row 1 -->
