@@ -11,13 +11,13 @@
     <div class="col-md-6">
       @if (\Auth::user()->id == $profile->user_id)
         <a style="position:relative; left:2px;" class="btn btn-link" href="{{ route('profile.edit') }}">[ Edit Profile ]</a>
-        <a style="position:relative; left:-10px" class="btn btn-link" href="{{ route('profile.edit') }}">[ Upload Image ]</a>
+        <a style="position:relative; left:-10px" class="btn btn-link" href="{{ route('profile.upload_image')}}">[ Upload/Change Image ]</a>
       @endif
 
       <div class="row"> <!-- mini row  -->
 
         <div class="col-sm-6">
-            <img class="img-thumbnail img-responsive" src="http://lorempixel.com/500/500/" alt="user" height="250" width="250">
+          <img class="img-thumbnail img-responsive" src="{{ route('profile.profile_pic', ['filename'=>$profile->image_name]) }}" alt="user-image" height="500" width="500">
         </div> <!-- end cols  -->
 
         <div class="col-sm-6">

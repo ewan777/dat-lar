@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Profile;
 
 class Profiles extends Controller
@@ -73,6 +74,34 @@ class Profiles extends Controller
     \Session::flash('flash_message', 'Your profile has been updated');
     return redirect()->route('profile');
   }
+
+  public function uploadImage(){
+    return view('profile.upload_image');
+  }
+
+  public function saveImage(Request $request){
+    $this->validate($request, [
+      'profile_pic'   => 'image|dimensions:min_width=100,min_height=200|max:1000',
+    ]);
+    $user = \Auth::user();
+    $file = $request->file('profile_pic');
+    $ext = $request->file('profile_pic')->extension();
+    $filename = $user->username.'-'.$user->id.'.'.$ext;
+    if($file){
+      $request->file('profile_pic')->storeAs('profile_pics/'.$user->id, $filename, 'local');
+      $profile = Profile::where('user_id', $user->id)->first();
+      $profile->image_name = $filename;
+      $profile->save();
+    }
+    return redirect()->route('profile');
+  }
+
+  public function profilePic($filename){
+    $id = \Auth::user()->id;
+    $file = \Storage::disk('local')->get('/profile_pics/'.$id.'/'.$filename);
+    return new Response($file, 200);
+  }
+
 
 
 } //end class

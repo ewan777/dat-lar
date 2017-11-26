@@ -21,6 +21,7 @@ class CreateProfilesTable extends Migration
 	            ->on('users')
 	            ->onDelete('cascade');
             $table->string('username');
+            $table->string('image_name')->nullable();
             $table->string('sex');
             $table->string('about_me')->nullable();
             $table->string('age_group');

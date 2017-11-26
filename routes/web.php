@@ -107,33 +107,51 @@ Route::get('/member-page', [
 Route::group(['prefix'=>'profile'], function(){
 
   Route::get('/', [
-    'uses' => 'Profiles@getProfile',
-    'as' => 'profile',
-    'middleware' =>'auth'
+    'uses'       => 'Profiles@getProfile',
+    'as'         => 'profile',
+    'middleware' => 'auth'
   ]);
 
   Route::get('/new', [
-    'uses' => 'Profiles@getNew',
-    'as' => 'profile.new',
-    'middleware' =>'auth'
+    'uses'       => 'Profiles@getNew',
+    'as'         => 'profile.new',
+    'middleware' => 'auth'
   ]);
 
   Route::post('/new', [
-    'uses' => 'Profiles@postNew',
-    'as' => 'profile.create',
-    'middleware' =>'auth'
+    'uses'       => 'Profiles@postNew',
+    'as'         => 'profile.create',
+    'middleware' => 'auth'
   ]);
 
   Route::get('/edit', [
-    'uses' => 'Profiles@getEdit',
-    'as' => 'profile.edit',
-    'middleware' =>'auth'
+    'uses'       => 'Profiles@getEdit',
+    'as'         => 'profile.edit',
+    'middleware' => 'auth'
   ]);
 
   Route::put('/edit', [
-    'uses' => 'Profiles@putEdit',
-    'as' => 'profile.update',
+    'uses'       => 'Profiles@putEdit',
+    'as'         => 'profile.update',
     'middleware' =>'auth'
+  ]);
+
+  Route::get('/upload-image', [
+    'uses'       => 'Profiles@uploadImage',
+    'as'         => 'profile.upload_image',
+    'middleware' => 'auth'
+  ]);
+
+  Route::post('/save-image', [
+    'uses'       => 'Profiles@saveImage',
+    'as'         => 'profile.save_image',
+    'middleware' => 'auth'
+  ]);
+
+  Route::get('/profile-pic/{filename}', [
+    'uses'       => 'Profiles@profilePic',
+    'as'         => 'profile.profile_pic',
+    'middleware' => 'auth'
   ]);
 
 });
