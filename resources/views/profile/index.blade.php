@@ -20,14 +20,15 @@
       </div>
 
     </div> <!-- end cols -->
+
     <div class="col-md-6">
       @if (\Auth::user()->id == $profile->user_id)
         <a class="center-block btn btn-link" href="{{ route('profile.upload_image')}}">[ Upload/Change Image ]</a>
       @endif
 
-      <img class="img-thumbnail img-responsive center-block" src="{{ route('profile.profile_pic', ['filename'=>$profile->image_name]) }}" alt="user-image" width="350">
-
+      <img class="img-thumbnail img-responsive center-block" src="{{ route('profile.profile_pic', ['filename'=>$profile->image_name]) }}" alt="user-image" style="max-height:250px; width:auto;">
     </div> <!-- end cols  -->
+
   </div> <!-- end row 1 -->
   <hr>
   <div class="row" id="row-2">
