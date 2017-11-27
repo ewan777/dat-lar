@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Profile;
+use Image;
+use File;
 
 class Profiles extends Controller
 {
@@ -85,22 +87,27 @@ class Profiles extends Controller
     ]);
     $user = \Auth::user();
     $file = $request->file('profile_pic');
-    $ext = $request->file('profile_pic')->extension();
+    $ext = $file->getClientOriginalExtension();
+    // $ext = $request->file('profile_pic')->extension();
     $filename = $user->username.'-'.$user->id.'.'.$ext;
-    if($file){
-      $request->file('profile_pic')->storeAs('profile_pics/'.$user->id, $filename, 'local');
-      $profile = Profile::where('user_id', $user->id)->first();
-      $profile->image_name = $filename;
-      $profile->save();
+    $location = public_path('images/profile_pics/'.$user->id.'/'.$filename);
+    if(!File::exists('images/profile_pics/'.$user->id)) {
+      File::makeDirectory( public_path('images/profile_pics/'.$user->id) );
     }
+    Image::make($file)->heighten(250)->save($location);
+    // $request->file('profile_pic')->storeAs('profile_pics/'.$user->id, $filename, 'local');
+
+    $profile = Profile::where('user_id', $user->id)->first();
+    $profile->image_name = $filename;
+    $profile->save();
     return redirect()->route('profile');
   }
 
-  public function profilePic($filename){
-    $id = \Auth::user()->id;
-    $file = \Storage::disk('local')->get('/profile_pics/'.$id.'/'.$filename);
-    return new Response($file, 200);
-  }
+  // public function profilePic($filename){
+  //   $id = \Auth::user()->id;
+  //   $file = \Storage::disk('local')->get('/profile_pics/'.$id.'/'.$filename);
+  //   return new Response($file, 200);
+  // }
 
 
 } //end class
