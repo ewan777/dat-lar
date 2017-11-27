@@ -14,7 +14,20 @@ class Profiles extends Controller
   public function getProfile(Request $request){
       if(\Auth::user()->hasProfile()){
         $profile = Profile::where('user_id', \Auth::user()->id)->first();
-        return view('profile.index')->with('profile', $profile);
+
+        if (\Auth::user()->sex == 'male'){
+          $user_profiles = Profile::where('sex', 'female')
+            ->take(3)
+            ->get();
+        } else {
+          $user_profiles = Profile::where('sex', 'male')->get()
+            ->take(3)
+            ->get();
+        }
+
+        return view('profile.index')->with(['profile'=>$profile,
+         'user_profiles'=>$user_profiles]);
+
       } else{
          return view('profile.start');
       }
@@ -93,13 +106,16 @@ class Profiles extends Controller
     if(!File::exists('images/profile_pics/'.$user->id)) {
       File::makeDirectory( public_path('images/profile_pics/'.$user->id) );
     }
-    Image::make($file)->fit(250, 250)->save($location);
+    Image::make($file)->fit(325, 250)->save($location);
 
     $profile = Profile::where('user_id', $user->id)->first();
     $profile->image_name = $filename;
     $profile->save();
     return redirect()->route('profile');
-  }
+
+  } //end public function
+
+
 
 
 } //end class
