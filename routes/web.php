@@ -148,10 +148,4 @@ Route::group(['prefix'=>'profile'], function(){
     'middleware' => 'auth'
   ]);
 
-  Route::get('/profile-pic/{filename}', [
-    'uses'       => 'Profiles@profilePic',
-    'as'         => 'profile.profile_pic',
-    'middleware' => 'auth'
-  ]);
-
 });

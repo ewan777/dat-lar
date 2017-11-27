@@ -88,27 +88,18 @@ class Profiles extends Controller
     $user = \Auth::user();
     $file = $request->file('profile_pic');
     $ext = $file->getClientOriginalExtension();
-    // $ext = $request->file('profile_pic')->extension();
     $filename = $user->username.'-'.$user->id.'.'.$ext;
     $location = public_path('images/profile_pics/'.$user->id.'/'.$filename);
     if(!File::exists('images/profile_pics/'.$user->id)) {
       File::makeDirectory( public_path('images/profile_pics/'.$user->id) );
     }
-    // Image::make($file)->heighten(250)->save($location);
     Image::make($file)->fit(250, 250)->save($location);
-    // $request->file('profile_pic')->storeAs('profile_pics/'.$user->id, $filename, 'local');
 
     $profile = Profile::where('user_id', $user->id)->first();
     $profile->image_name = $filename;
     $profile->save();
     return redirect()->route('profile');
   }
-
-  // public function profilePic($filename){
-  //   $id = \Auth::user()->id;
-  //   $file = \Storage::disk('local')->get('/profile_pics/'.$id.'/'.$filename);
-  //   return new Response($file, 200);
-  // }
 
 
 } //end class
