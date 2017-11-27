@@ -94,7 +94,8 @@ class Profiles extends Controller
     if(!File::exists('images/profile_pics/'.$user->id)) {
       File::makeDirectory( public_path('images/profile_pics/'.$user->id) );
     }
-    Image::make($file)->heighten(250)->save($location);
+    // Image::make($file)->heighten(250)->save($location);
+    Image::make($file)->fit(250, 250)->save($location);
     // $request->file('profile_pic')->storeAs('profile_pics/'.$user->id, $filename, 'local');
 
     $profile = Profile::where('user_id', $user->id)->first();
