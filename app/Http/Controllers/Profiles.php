@@ -20,7 +20,7 @@ class Profiles extends Controller
             ->take(3)
             ->get();
         } else {
-          $user_profiles = Profile::where('sex', 'male')->get()
+          $user_profiles = Profile::where('sex', 'male')
             ->take(3)
             ->get();
         }
