@@ -106,7 +106,7 @@ Route::get('/member-page', [
 
 Route::group(['prefix'=>'profile'], function(){
 
-  Route::get('/', [
+  Route::get('/{user_id}', [
     'uses'       => 'Profiles@getProfile',
     'as'         => 'profile',
     'middleware' => 'auth'
@@ -124,13 +124,13 @@ Route::group(['prefix'=>'profile'], function(){
     'middleware' => 'auth'
   ]);
 
-  Route::get('/edit', [
+  Route::get('/{user_id}/edit', [
     'uses'       => 'Profiles@getEdit',
     'as'         => 'profile.edit',
     'middleware' => 'auth'
   ]);
 
-  Route::put('/edit', [
+  Route::put('/{user_id}/edit', [
     'uses'       => 'Profiles@putEdit',
     'as'         => 'profile.update',
     'middleware' =>'auth'
@@ -146,6 +146,23 @@ Route::group(['prefix'=>'profile'], function(){
     'uses'       => 'Profiles@saveImage',
     'as'         => 'profile.save_image',
     'middleware' => 'auth'
+  ]);
+
+});
+
+
+Route::group(['prefix'=>'message'], function(){
+
+  Route::get('/new', [
+    'uses' => 'Messages@getMessage',
+    'as' => 'new_message',
+    'middleware' =>'member'
+  ]);
+
+  Route::post('/new', [
+    'uses' => 'Messages@postMessage',
+    'as' => 'send_message',
+    'middleware' =>'member'
   ]);
 
 });

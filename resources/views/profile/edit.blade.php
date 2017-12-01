@@ -19,7 +19,7 @@
     </div>
   @endif
 
-  <form class="form" action="{{ route('profile.update') }}" method="post">
+  <form class="form" action="{{ route('profile.update', $profile->user_id) }}" method="post">
     {{ csrf_field() }}
     <input type="hidden" name="_method" value="PUT">
 
@@ -51,7 +51,7 @@
     <button class="btn btn-success btn-block" type="submit" name="button">Update</button>
 
   </form>
-  <a style="position:relative; right:12px;" class="btn btn-link" href="{{ route('profile') }}">[ Cancel ]</a>
+  <a style="position:relative; right:12px;" class="btn btn-link" href="{{ route('profile', $profile->user_id) }}">[ Cancel ]</a>
 
 
 </div>

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use App\User;
 use App\Profile;
 use Image;
 use File;
@@ -11,17 +11,19 @@ use File;
 class Profiles extends Controller
 {
 
-  public function getProfile(Request $request){
-      if(\Auth::user()->hasProfile()){
-        $profile = Profile::where('user_id', \Auth::user()->id)->first();
+  public function getProfile(Request $request, $user_id){
+      $user = User::where('id', $user_id)->first();
 
-        if (\Auth::user()->sex == 'male'){
+      if($user->hasProfile()){
+        $profile = Profile::where('user_id', $user_id)->first();
+
+        if ($profile->sex == 'male'){
           $user_profiles = Profile::where('sex', 'female')
-            ->take(3)
+            ->take(5)
             ->get();
         } else {
           $user_profiles = Profile::where('sex', 'male')
-            ->take(3)
+            ->take(5)
             ->get();
         }
 
@@ -63,22 +65,23 @@ class Profiles extends Controller
     return redirect()->route('profile');
   }
 
-  public function getEdit(){
-    if(\Auth::user()->hasProfile()){
-      $profile = Profile::where('user_id', \Auth::user()->id)->first();
+  public function getEdit($user_id){
+    $user = User::where('id', $user_id)->first();
+    if($user->hasProfile()){
+      $profile = Profile::where('user_id', $user_id)->first();
       return view('profile.edit')->with('profile', $profile);
     } else{
        return view('profile.start');
     }
   }
 
-  public function putEdit(Request $request){
+  public function putEdit(Request $request, $user_id){
     $this->validate($request, [
       'age_group'   => 'required',
       'nationality' => 'required'
     ]);
 
-    Profile::where('user_id', \Auth::user()->id)
+    Profile::where('user_id', $user_id)
       ->update([
         'age_group'   => $request->input('age_group'),
         'nationality' => $request->input('nationality'),
@@ -87,7 +90,7 @@ class Profiles extends Controller
       ]);
 
     \Session::flash('flash_message', 'Your profile has been updated');
-    return redirect()->route('profile');
+    return redirect()->route('profile', $user_id);
   }
 
   public function uploadImage(){

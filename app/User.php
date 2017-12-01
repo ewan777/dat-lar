@@ -31,6 +31,11 @@ class User extends Authenticatable
       return $this->hasOne('App\Membership');
     }
 
+    public function messages(){
+      return $this->hasMany('App\Message');
+    }
+
+
     public function hasMembership(){
       $membership = $this->membership()->where('user_id', $this->id)->first();
       if ($membership){

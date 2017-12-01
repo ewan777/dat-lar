@@ -12,7 +12,8 @@
   <div class="row" id="row-1">
     <div class="col-md-6">
       @if (\Auth::user()->id == $profile->user_id)
-        <a class="center-block btn btn-link" href="{{ route('profile.edit') }}">[ Edit Profile ]</a>
+        <a class="center-block btn btn-link"
+          href="{{ route('profile.edit', $profile->user_id) }}">[ Edit Profile ]</a>
       @endif
 
       <div class="well" style="width:auto; height:250px;">
@@ -31,7 +32,7 @@
       <div style="background:#f5f5f5; padding:10px; border:1px solid #e3e3e3; border-radius:3px;">
         <img class="img-thumbnail img-responsive center-block"
           src="{{ asset(
-            'images/profile_pics/'.\Auth::user()->id.'/'.$profile->image_name
+            'images/profile_pics/'.$profile->id.'/'.$profile->image_name
             ) }}"
           alt="user-image">
       </div>

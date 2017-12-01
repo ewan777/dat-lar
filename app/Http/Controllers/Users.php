@@ -75,7 +75,7 @@ class Users extends Controller
         if ($confirmed){
           if (Auth::attempt(['email'=>$email,'password'=>$password])){
             \Session::flash('flash_message', 'You are now logged in');
-            return redirect()->route('profile');
+            return redirect()->route('profile', Auth::user()->id);
           } else{
               \Session::flash('flash_warning', 'Wrong password');
               return redirect()->route('user.login');
