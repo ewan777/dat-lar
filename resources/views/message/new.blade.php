@@ -19,7 +19,7 @@
     </div>
   @endif
 
-  <form class="form" action="{{ route('send_message') }}" method="post">
+  <form class="form" action="{{ route('send_message', $to_user_id) }}" method="post">
     {{ csrf_field() }}
 
     <div class="form-group">

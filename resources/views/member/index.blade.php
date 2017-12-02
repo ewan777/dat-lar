@@ -1,15 +1,16 @@
 @extends('layouts.app')
 @section('content')
 
-<div class="row">
-<div class="col-md-8">
-  <h1 class="text-center">Member's Area
+<h1 class="text-center">Member's Area
   <small>Welcome {{$profile->username}}</small>
-  </h1>
-  <hr>
-  <p class="lead">
-    You can now send messages and converse with the guests
-  </p>
+</h1>
+<hr>
+<p class="text-center lead">
+  You can now send messages and converse with the guests
+</p>
+
+<div class="row">
+<div class="col-md-6">
 
   <ul class="list-group">
     @foreach($user_profiles as $user)
@@ -20,12 +21,12 @@
       </li>
     @endforeach
   </ul>
+</div> <!-- end cols -->
 
-  {{-- <p>
-    <a class="btn btn-success btn-lg" href="{{ route('new_message') }}">Send Message</a>
-  </p> --}}
+<div class="col-md-6">
+    <a class="btn btn-success" href="{{ route('sent_messages', \Auth::user()->id) }}">Outbox</a>
+</div> <!-- end cols -->
 
-</div>
-</div>
+</div> <!-- end row -->
 
 @endsection

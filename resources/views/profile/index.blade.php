@@ -17,10 +17,15 @@
       @endif
 
       <div class="well" style="width:auto; height:250px;">
-        <h4 class="text-center">{{ $profile->username }}</h4><hr>
-        <p>Sex: {{ ucfirst($profile->sex) }} </p>
-        <p>Age Group: {{ $profile->age_group }} </p>
-        <p>Nationality: {{ $profile->nationality }}</p>
+        <h4 class="text-center"><strong>{{ $profile->username }}</strong></h4><hr>
+        <p><strong>Sex:</strong> {{ ucfirst($profile->sex) }} </p>
+        <p><strong>Age Group:</strong> {{ $profile->age_group }} </p>
+        <p><strong>Nationality:</strong> {{ $profile->nationality }}</p>
+        @if (\Auth::user()->id != $profile->user_id)
+          <a href="#"><span class="glyphicon glyphicon-heart"></span></a>&nbsp;&nbsp;
+          <a href="{{ route('new_message', $profile->user_id) }}"><span class="glyphicon glyphicon-envelope"></span></a>&nbsp;&nbsp;
+          <a href="#">[Live Chat]</a>
+        @endif
       </div>
 
     </div> <!-- end cols -->
@@ -29,6 +34,7 @@
       @if (\Auth::user()->id == $profile->user_id)
         <a class="center-block btn btn-link" href="{{ route('profile.upload_image')}}">[ Upload/Change Image ]</a>
       @endif
+
       <div style="background:#f5f5f5; padding:10px; border:1px solid #e3e3e3; border-radius:3px;">
         <img class="img-thumbnail img-responsive center-block"
           src="{{ asset(
@@ -46,7 +52,7 @@
   <div class="row" id="row-2">
     <div class="col-md-6">
       <div class="well">
-        <h4 class="text-center">About Me</h4>
+        <h4 class="text-center"><strong>About Me</strong></h4>
         <hr>
         <p class="">{{ $profile->about_me }}</p>
       </div>
@@ -54,7 +60,7 @@
 
     <div class="col-md-6">
       <div class="well">
-        <h4 class="text-center">What I Am Looking For</h4>
+        <h4 class="text-center"><strong>What I Am Looking For</strong></h4>
         <hr>
         <p class="">{{ $profile->looking_for }}</p>
       </div>
@@ -68,7 +74,7 @@
 
     <div class="col-md-6">
       <div class="well">
-        <h4 class="text-center">Become A Member</h4>
+        <h4 class="text-center"><strong>Become A Member</strong></h4>
         <hr>
         <p>You are encouraged to become a privileged member, this will allow you to like, message and chat with other members</p>
         <p>Have a look at some recently joined members to the right</p>

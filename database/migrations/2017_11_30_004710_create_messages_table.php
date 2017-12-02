@@ -21,6 +21,7 @@ class CreateMessagesTable extends Migration
               ->on('users')
               ->onDelete('cascade');
             $table->integer('to_user_id')->unsigned();
+            $table->string('receiver');
             $table->string('title')->nullable();
             $table->string('body');
 
