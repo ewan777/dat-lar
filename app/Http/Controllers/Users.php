@@ -25,8 +25,7 @@ class Users extends Controller
       ]);
 
       $confirmation_code = str_random(40);
-
-      $user = new User([
+      $user = User::create([
         'name'=>              $request->input('name'),
         'username'=>          $request->input('username'),
         'sex'=>               $request->input('sex'),
@@ -34,21 +33,19 @@ class Users extends Controller
         'password'=>          bcrypt($request->input('password')),
         'confirmation_code'=> $confirmation_code
       ]);
-      $user->save();
 
       \Mail::to($user->email)->send(new Register($user->confirmation_code));
-      \Session::flash('flash_message', 'you will receive a registration email shortly');
-      return redirect()->route('home');
+      return redirect()->route('home')
+        ->with('flash_message', 'you will receive a registration email shortly');
     }
 
     public function getRegistered($confirmation_code){
       $user = User::where('confirmation_code', $confirmation_code)
         ->first();
-      $user->confirmed = 1;
+      $user->confirmed = true;
       $user->save();
-
-      \Session::flash('flash_message', 'You can now log in');
-      return redirect()->route('user.login');
+      return redirect()->route('user.login')
+        ->with('flash_message', 'You can now log in');
     }
 
     public function getLogin(){
@@ -67,22 +64,22 @@ class Users extends Controller
         ->first();
 
       if ($user === null) {
-        \Session::flash('flash_warning', 'There is no account matching these credentials, please sign up');
-        return redirect()->route('user.register');
+        return redirect()->route('user.register')
+          ->with('flash_warning', 'There is no account matching these credentials, please sign up');
       } else {
 
         $confirmed = $user->confirmed;
         if ($confirmed){
           if (Auth::attempt(['email'=>$email,'password'=>$password])){
-            \Session::flash('flash_message', 'You are now logged in');
-            return redirect()->route('profile', Auth::user()->id);
+            return redirect()->route('profile', Auth::user()->id)
+              ->with('flash_message', 'You are now logged in');
           } else{
-              \Session::flash('flash_warning', 'Wrong password');
-              return redirect()->route('user.login');
+              return redirect()->route('user.login')
+                ->with('flash_warning', 'Wrong password');
           }
         } else {
-            \Session::flash('flash_warning', 'Account not activated, use your confirmation email to activate your account, or request a new confirmation email');
-            return redirect()->route('home');
+            return redirect()->route('home')
+              ->with('flash_warning', 'Account not activated, use your confirmation email to activate your account, or request a new confirmation email');
         }
       }
 
@@ -90,8 +87,8 @@ class Users extends Controller
 
     public function getLogout(){
       Auth::logout();
-      \Session::flash('flash_message', 'You have successfully logged out');
-      return redirect()->route('home');
+      return redirect()->route('home')
+        ->with('flash_message', 'You have successfully logged out');
     }
 
 
@@ -111,18 +108,18 @@ class Users extends Controller
         ->first();
 
       if ($user === null) {
-        \Session::flash('flash_warning', 'There is no account matching these credentials, please sign up');
-        return redirect()->route('user.signup');
+        return redirect()->route('user.signup')
+          ->with('flash_warning', 'There is no account matching these credentials, please sign up');
       } else {
 
         $confirmed = $user->confirmed;
         if ($confirmed){
-            \Session::flash('flash_message', 'Your account is already activated, you can login');
-            return redirect()->route('user.login');
+            return redirect()->route('user.login')
+              ->with('flash_message', 'Your account is already activated, you can login');
         } else{
-          \Mail::to($user->email)->send(new SignUp($user->confirmation_code));
-          \Session::flash('flash_message', 'you will receive a confirmation email shortly');
-          return redirect()->route('home');
+          \Mail::to($user->email)->send(new Register($user->confirmation_code));
+          return redirect()->route('home')
+            ->with('flash_message', 'you will receive a confirmation email shortly');
         }
       }
     }
@@ -142,14 +139,14 @@ class Users extends Controller
       $reset_code = str_random(40);
 
       if ($user === null) {
-        \Session::flash('flash_warning', 'There is no account matching these credentials, please sign up');
-        return redirect()->route('user.signup');
+        return redirect()->route('user.signup')
+          ->with('flash_warning', 'There is no account matching these credentials, please sign up');
       } else {
         $user->reset_code = $reset_code;
         $user->save();
         \Mail::to($user->email)->send(new ResetPassword($reset_code));
-        \Session::flash('flash_message', 'password reset email sent');
-        return redirect()->route('home');
+        return redirect()->route('home')
+          ->with('flash_message', 'password reset email sent');
       }
 
     }
@@ -172,13 +169,13 @@ class Users extends Controller
         ->first();
 
       if ($user === null) {
-        \Session::flash('flash_warning', 'There is no account matching these credentials, please sign up');
-        return redirect()->route('user.signup');
+        return redirect()->route('user.signup')
+          ->with('flash_warning', 'There is no account matching these credentials, please sign up');
       } else {
         $user->password = $password;
         $user->save();
-        \Session::flash('flash_message', 'Password has been reset');
-        return redirect()->route('user.login');
+        return redirect()->route('user.login')
+          ->with('flash_message', 'Password has been reset');
       }
 
     }
