@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\Mail\MembershipExpired;
+use App\Jobs\ExpiredEmail;
 
 class Membership
 {
@@ -26,8 +26,9 @@ class Membership
           if($request->user()->membershipExpired()){
             $request->user()->removeMembership();
             $username = $request->user()->username;
-            \Mail::to($request->user()->email)
-              ->send(new MembershipExpired($username));
+
+            dispatch(new ExpiredEmail($request->user(), $username));
+
             return redirect()->route('home')
               ->with('warning', 'Your membership has expired');
           } else{

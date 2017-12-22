@@ -8,6 +8,7 @@ use App\Mail\ResetPassword;
 use Illuminate\Http\Request;
 use Auth;
 use App\Jobs\ConfirmationEmail;
+use App\Jobs\PasswordEmail;
 
 class Users extends Controller
 {
@@ -142,11 +143,11 @@ class Users extends Controller
 
       if ($user === null) {
         return redirect()->route('user.signup')
-          ->with('warning', 'There is no account matching these credentials, please sign up');
+          ->with('warning', 'There is no account matching these credentials, please register');
       } else {
         $user->reset_code = $reset_code;
         $user->save();
-        \Mail::to($user->email)->send(new ResetPassword($reset_code));
+        dispatch( new PasswordEmail($user, $reset_code) );
         return redirect()->route('home')
           ->with('success', 'password reset email sent');
       }
