@@ -7,6 +7,7 @@ use App\Mail\Register;
 use App\Mail\ResetPassword;
 use Illuminate\Http\Request;
 use Auth;
+use App\Jobs\ConfirmationEmail;
 
 class Users extends Controller
 {
@@ -34,9 +35,10 @@ class Users extends Controller
         'confirmation_code'=> $confirmation_code
       ]);
 
-      \Mail::to($user->email)->send(new Register($user->confirmation_code));
+      dispatch(new ConfirmationEmail($user, $confirmation_code));
+
       return redirect()->route('home')
-        ->with('flash_message', 'you will receive a registration email shortly');
+        ->with('success', 'you will receive a registration email shortly');
     }
 
     public function getRegistered($confirmation_code){
@@ -45,7 +47,7 @@ class Users extends Controller
       $user->confirmed = true;
       $user->save();
       return redirect()->route('user.login')
-        ->with('flash_message', 'You can now log in');
+        ->with('success', 'You can now log in');
     }
 
     public function getLogin(){
@@ -65,21 +67,21 @@ class Users extends Controller
 
       if ($user === null) {
         return redirect()->route('user.register')
-          ->with('flash_warning', 'There is no account matching these credentials, please sign up');
+          ->with('warning', 'There is no account matching these credentials, please sign up');
       } else {
 
         $confirmed = $user->confirmed;
         if ($confirmed){
           if (Auth::attempt(['email'=>$email,'password'=>$password])){
             return redirect()->route('profile', Auth::user()->id)
-              ->with('flash_message', 'You are now logged in');
+              ->with('success', 'You are now logged in');
           } else{
               return redirect()->route('user.login')
-                ->with('flash_warning', 'Wrong password');
+                ->with('warning', 'Wrong password');
           }
         } else {
             return redirect()->route('home')
-              ->with('flash_warning', 'Account not activated, use your confirmation email to activate your account, or request a new confirmation email');
+              ->with('warning', 'Account not activated, use your confirmation email to activate your account, or request a new confirmation email');
         }
       }
 
@@ -88,7 +90,7 @@ class Users extends Controller
     public function getLogout(){
       Auth::logout();
       return redirect()->route('home')
-        ->with('flash_message', 'You have successfully logged out');
+        ->with('success', 'You have successfully logged out');
     }
 
 
@@ -109,17 +111,17 @@ class Users extends Controller
 
       if ($user === null) {
         return redirect()->route('user.signup')
-          ->with('flash_warning', 'There is no account matching these credentials, please sign up');
+          ->with('warning', 'There is no account matching these credentials, please sign up');
       } else {
 
         $confirmed = $user->confirmed;
         if ($confirmed){
             return redirect()->route('user.login')
-              ->with('flash_message', 'Your account is already activated, you can login');
+              ->with('success', 'Your account is already activated, you can login');
         } else{
-          \Mail::to($user->email)->send(new Register($user->confirmation_code));
+          dispatch(new ConfirmationEmail($user, $user->confirmation_code));
           return redirect()->route('home')
-            ->with('flash_message', 'you will receive a confirmation email shortly');
+            ->with('success', 'you will receive a confirmation email shortly');
         }
       }
     }
@@ -140,13 +142,13 @@ class Users extends Controller
 
       if ($user === null) {
         return redirect()->route('user.signup')
-          ->with('flash_warning', 'There is no account matching these credentials, please sign up');
+          ->with('warning', 'There is no account matching these credentials, please sign up');
       } else {
         $user->reset_code = $reset_code;
         $user->save();
         \Mail::to($user->email)->send(new ResetPassword($reset_code));
         return redirect()->route('home')
-          ->with('flash_message', 'password reset email sent');
+          ->with('success', 'password reset email sent');
       }
 
     }
@@ -170,12 +172,12 @@ class Users extends Controller
 
       if ($user === null) {
         return redirect()->route('user.signup')
-          ->with('flash_warning', 'There is no account matching these credentials, please sign up');
+          ->with('warning', 'There is no account matching these credentials, please sign up');
       } else {
         $user->password = $password;
         $user->save();
         return redirect()->route('user.login')
-          ->with('flash_message', 'Password has been reset');
+          ->with('success', 'Password has been reset');
       }
 
     }

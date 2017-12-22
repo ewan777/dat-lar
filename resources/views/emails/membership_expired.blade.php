@@ -9,7 +9,7 @@
   <hr>
 
   <p class="lead">
-    Please login and click on the "join" link to renew your membership
+    Please login and click on the "join" link to renew your membership.
   </p>
 
   <a href="{{ route('user.login') }}">

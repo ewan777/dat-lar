@@ -17,8 +17,8 @@ class Membership
     public function handle($request, Closure $next)
     {
         if ($request->user() == null) {
-          \Session::flash('flash_warning', 'Insufficient Permissions');
-          return redirect()->route('home');
+          return redirect()->route('home')
+            ->with('warning', 'Insufficient Permissions');
         }
 
         if($request->user()->hasMembership()){
@@ -27,15 +27,14 @@ class Membership
             $request->user()->removeMembership();
             $username = $request->user()->username;
             \Mail::to($request->user()->email)
-            ->send(new MembershipExpired($username));
-            \Session::flash('flash_warning', 'Your membership has expired');
-            return redirect()->route('home');
+              ->send(new MembershipExpired($username));
+            return redirect()->route('home')
+              ->with('warning', 'Your membership has expired');
           } else{
             return $next($request);
           }
         }
-
-        \Session::flash('flash_warning', 'Insufficient Permissions');
-        return redirect()->route('home');
+        return redirect()->route('home')
+          ->with('warning', 'Insufficient Permissions');
     }
 }

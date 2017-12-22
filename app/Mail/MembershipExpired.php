@@ -30,7 +30,8 @@ class MembershipExpired extends Mailable
      */
     public function build()
     {
-        return $this->from('app.mailer01@gmail.com')
-        ->view('emails.membership_expired');
+        return $this
+          ->from('app.mailer01@gmail.com')
+          ->view('emails.membership_expired');
     }
 }
