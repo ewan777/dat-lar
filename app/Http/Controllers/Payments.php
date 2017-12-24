@@ -8,6 +8,7 @@ use Stripe\Charge;
 use App\User;
 use App\Membership;
 use Auth;
+use App\Jobs\PaymentReceiptJob;
 
 class Payments extends Controller
 {
@@ -52,6 +53,7 @@ class Payments extends Controller
         return redirect()->route('payment')
           ->with('warning', $e->getMessage());
     }
+    dispatch(new PaymentReceiptJob($user));
     return redirect()->route('profile', ['user_id'=>$user_id])
       ->with('success', 'Payment Accepted, You Now Have VIP Privileges');
   }
