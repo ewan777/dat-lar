@@ -14,12 +14,12 @@ class Payments extends Controller
 
   public function getPayment(){
     if (Auth::user() == null) {
-      \Session::flash('flash_warning', 'Insufficient Permissions');
-      return redirect()->route('home');
+      return redirect()->route('home')
+        ->with('warning', 'Insufficient Permissions');
     }
     if (Auth::user()->hasMembership()){
-      \Session::flash('flash_message', 'You already have membership');
-      return redirect()->route('home');
+      return redirect()->route('home')
+        ->with('success', 'You already have membership');
     }
     return view('payment.pay');
   }
@@ -49,13 +49,11 @@ class Payments extends Controller
       $membership->save();
 
     } catch(\Exception $e){
-        \Session::flash('flash_warning', $e->getMessage());
-        return redirect()->route('payment');
+        return redirect()->route('payment')
+          ->with('warning', $e->getMessage());
     }
-
-    \Session::flash('flash_message', 'Payment Accepted, You Now Have VIP Privileges');
-    return redirect()->route('profile');
-
+    return redirect()->route('profile')
+      ->with('success', 'Payment Accepted, You Now Have VIP Privileges');
   }
 
 } //end class

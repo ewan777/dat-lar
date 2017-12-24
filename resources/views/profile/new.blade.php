@@ -19,7 +19,7 @@
     </div>
   @endif
 
-  <form class="form" action="{{ route('profile.create') }}" method="post">
+  <form class="form" action="{{ route('profile.create', $user_id) }}" method="post">
     {{ csrf_field() }}
 
     <div class="form-group">

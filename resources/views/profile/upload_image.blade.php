@@ -19,7 +19,7 @@
     </div>
   @endif
 
-  <form class="form" action="{{ route('profile.save_image') }}" method="post" enctype="multipart/form-data">
+  <form class="form" action="{{ route('profile.save_image', $user_id) }}" method="post" enctype="multipart/form-data">
     {{ csrf_field() }}
 
     <div class="form-group">

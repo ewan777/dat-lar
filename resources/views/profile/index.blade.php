@@ -32,16 +32,24 @@
 
     <div class="col-md-6">
       @if (\Auth::user()->id == $profile->user_id)
-        <a class="center-block btn btn-link" href="{{ route('profile.upload_image')}}">[ Upload/Change Image ]</a>
+        <a class="center-block btn btn-link"
+         href="{{ route('profile.upload_image', \Auth::user()->id) }}">[ Upload/Change Image ]</a>
       @endif
 
-      <div style="background:#f5f5f5; padding:10px; border:1px solid #e3e3e3; border-radius:3px;">
-        <img class="img-thumbnail img-responsive center-block"
+      @if( is_null($profile->image_name))
+        <div style="background:#f5f5f5; padding:10px; border:1px solid #e3e3e3; border-radius:3px;">
+          <img class="img-thumbnail img-responsive center-block"
+          src="{{ asset('default_profile_img/default_scaled.jpg') }}">
+        </div>
+      @else
+        <div style="background:#f5f5f5; padding:10px; border:1px solid #e3e3e3; border-radius:3px;">
+          <img class="img-thumbnail img-responsive center-block"
           src="{{ asset(
             'images/profile_pics/'.$profile->id.'/'.$profile->image_name
             ) }}"
           alt="user-image">
-      </div>
+        </div>
+      @endif
 
     </div> <!-- end cols  -->
 
@@ -82,11 +90,14 @@
     </div> <!-- end cols  -->
 
     <div class="col-md-6">
-      <div style="background:#f5f5f5; padding:10px; border:1px solid #e3e3e3; border-radius:3px;">
-        <div class="center-block" style="width:325px; height:250px;">
+
+      @if(count($user_profiles) > 0)
+        <div style="background:#f5f5f5; padding:10px; border:1px solid #e3e3e3; border-radius:3px;">
+          <div class="center-block" style="width:325px; height:250px;">
             @include('partials.carousel')
+          </div>
         </div>
-      </div>
+      @endif
     </div> <!-- end cols  -->
 
   </div> <!-- end row 3  -->

@@ -1,22 +1,11 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', [
   'uses' => 'Pages@home',
   'as' => 'home'
 ]);
-Route::get('/about', 'Pages@about');
 
+Route::get('/about', 'Pages@about');
 
 Route::group(['prefix'=>'user'], function(){
 
@@ -104,6 +93,7 @@ Route::get('/member-page', [
   'middleware' =>'member'
 ]);
 
+
 Route::group(['prefix'=>'profile'], function(){
 
   Route::get('/{user_id}', [
@@ -112,13 +102,13 @@ Route::group(['prefix'=>'profile'], function(){
     'middleware' => 'auth'
   ]);
 
-  Route::get('/new', [
+  Route::get('/new/{user_id}', [
     'uses'       => 'Profiles@getNew',
     'as'         => 'profile.new',
     'middleware' => 'auth'
   ]);
 
-  Route::post('/new', [
+  Route::post('/new/{user_id}', [
     'uses'       => 'Profiles@postNew',
     'as'         => 'profile.create',
     'middleware' => 'auth'
@@ -136,13 +126,13 @@ Route::group(['prefix'=>'profile'], function(){
     'middleware' =>'auth'
   ]);
 
-  Route::get('/upload-image', [
+  Route::get('/{user_id}/upload-image', [
     'uses'       => 'Profiles@uploadImage',
     'as'         => 'profile.upload_image',
     'middleware' => 'auth'
   ]);
 
-  Route::post('/save-image', [
+  Route::post('/{user_id}/save-image', [
     'uses'       => 'Profiles@saveImage',
     'as'         => 'profile.save_image',
     'middleware' => 'auth'

@@ -7,43 +7,50 @@ use App\User;
 use App\Profile;
 use Image;
 use File;
+use Auth;
 
 class Profiles extends Controller
 {
 
-  public function getProfile(Request $request, $user_id){
-      $user = User::where('id', $user_id)->first();
+  public function getProfile($user_id){
+    $user = User::where('id', $user_id)->first();
 
-      if($user->hasProfile()){
-        $profile = Profile::where('user_id', $user_id)->first();
+    if( $user->hasProfile() ){
+      $profile = Profile::where('user_id', $user_id)->first();
 
-        if ($profile->sex == 'male'){
-          $user_profiles = Profile::where('sex', 'female')
-            ->take(5)
-            ->get();
-        } else {
-          $user_profiles = Profile::where('sex', 'male')
-            ->take(5)
-            ->get();
-        }
-
-        return view('profile.index')->with(['profile'=>$profile,
-         'user_profiles'=>$user_profiles]);
-
-      } else{
-         return view('profile.start');
+      if ($profile->sex == 'male'){
+        $user_profiles = Profile::where('sex', 'female')
+          ->take(5)
+          ->get();
+      } else {
+        $user_profiles = Profile::where('sex', 'male')
+          ->take(5)
+          ->get();
       }
-  }
 
-  public function getNew(){
-    if(\Auth::user()->hasProfile()){
-      return view('profile.index');
+      return view('profile.index')->with(['profile'=>$profile,
+        'user_profiles'=>$user_profiles]);
+
+    } else{
+      return view('profile.start')
+        ->with('user', $user);
+    }
+  } //end function
+
+
+  public function getNew($user_id){
+    $user = User::where('id', $user_id)->first();
+    if($user->hasProfile()){
+      return view('profile.index')
+        ->with('user', $user);
     } else {
-       return view('profile.new');
+       return view('profile.new')
+        ->with('user_id', $user_id);
     }
   }
 
-  public function postNew(Request $request){
+  public function postNew(Request $request, $user_id){
+    $user = User::where('id', $user_id)->first();
 
     $this->validate($request, [
       'age_group'   => 'required',
@@ -51,9 +58,9 @@ class Profiles extends Controller
     ]);
 
     $profile = new Profile([
-      'user_id'      =>  \Auth::user()->id,
-      'username'     =>  \Auth::user()->username,
-      'sex'          =>  \Auth::user()->sex,
+      'user_id'      =>  $user->id,
+      'username'     =>  $user->username,
+      'sex'          =>  $user->sex,
       'about_me'     =>  $request->input('about_me'),
       'age_group'    =>  $request->input('age_group'),
       'nationality'  =>  $request->input('nationality'),
@@ -61,8 +68,8 @@ class Profiles extends Controller
     ]);
 
     $profile->save();
-    \Session::flash('flash_message', 'Profile created, now add a picture');
-    return redirect()->route('profile');
+    return redirect()->route('profile', ['user_id' => $user_id])
+      ->with('success', 'Profile created, now add a picture');
   }
 
   public function getEdit($user_id){
@@ -71,7 +78,8 @@ class Profiles extends Controller
       $profile = Profile::where('user_id', $user_id)->first();
       return view('profile.edit')->with('profile', $profile);
     } else{
-       return view('profile.start');
+       return view('profile.start')
+        ->with('user', $user);
     }
   }
 
@@ -89,19 +97,20 @@ class Profiles extends Controller
         'looking_for' => $request->input('looking_for')
       ]);
 
-    \Session::flash('flash_message', 'Your profile has been updated');
-    return redirect()->route('profile', $user_id);
+    return redirect()->route( 'profile', ['user_id' => $user_id] )
+      ->with('success', 'Your profile has been updated');
   }
 
-  public function uploadImage(){
-    return view('profile.upload_image');
+  public function uploadImage($user_id){
+    return view('profile.upload_image')
+      ->with('user_id', $user_id);
   }
 
-  public function saveImage(Request $request){
+  public function saveImage(Request $request, $user_id){
     $this->validate($request, [
       'profile_pic'   => 'required|image|dimensions:min_width=100,min_height=100|max:1000',
     ]);
-    $user = \Auth::user();
+    $user = User::where('id', $user_id)->first();
     $file = $request->file('profile_pic');
     $ext = $file->getClientOriginalExtension();
     $filename = $user->username.'-'.$user->id.'.'.$ext;
@@ -114,7 +123,7 @@ class Profiles extends Controller
     $profile = Profile::where('user_id', $user->id)->first();
     $profile->image_name = $filename;
     $profile->save();
-    return redirect()->route('profile');
+    return redirect()->route('profile', ['user_id'=>$user_id]);
 
   } //end public function
 

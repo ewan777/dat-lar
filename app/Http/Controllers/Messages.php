@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Message;
 use App\User;
+use Auth;
 
 class Messages extends Controller
 {
@@ -26,19 +27,19 @@ class Messages extends Controller
     $message = new Message([
       'to_user_id' =>  $to_user_id,
       'receiver'   =>  $receiver,
-      'user_id'    =>  \Auth::user()->id,
+      'user_id'    =>  Auth::user()->id,
       'title'      =>  $request->input('title'),
       'body'       =>  $request->input('body'),
       'expires'    =>  $expires
     ]);
 
     $message->save();
-    \Session::flash('flash_message', 'Your message has been sent');
-    return redirect()->route('profile', \Auth::user()->id);
+    return redirect()->route('profile', Auth::user()->id)
+      ->with('success', 'Your message has been sent');
   }
 
   public function sentMessages($user_id){
-    $messages = Message::where('user_id', $user_id)->get();  
+    $messages = Message::where('user_id', $user_id)->get();
     return view('message.sent_messages')->with('messages', $messages);
   }
 
