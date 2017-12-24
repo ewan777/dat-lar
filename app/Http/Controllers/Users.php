@@ -101,12 +101,10 @@ class Users extends Controller
 
     public function postResendActivation(Request $request){
       $this->validate($request, [
-        'email'    => 'email|required',
-        'password' => 'required'
+        'email'    => 'email|required'
       ]);
 
-      $email    = $request->input('email');
-      $password    = $request->input('password');
+      $email    = $request->input('email');    
       $user = User::where('email', $email)
         ->first();
 

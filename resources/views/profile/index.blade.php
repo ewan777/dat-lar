@@ -78,6 +78,7 @@
 
   <hr>
 
+  @if(!Auth::user()->hasMembership())
   <div class="row" id="row-3">
 
     <div class="col-md-6">
@@ -101,6 +102,8 @@
     </div> <!-- end cols  -->
 
   </div> <!-- end row 3  -->
+  @endif
+
   <hr>
   <br>
 

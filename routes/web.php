@@ -79,12 +79,14 @@ Route::group(['prefix'=>'user'], function(){
 
 Route::get('/payment', [
   'uses' => 'Payments@getPayment',
-  'as' => 'payment'
+  'as' => 'payment',
+  'middleware' => 'auth'
 ]);
 
 Route::post('/payment', [
   'uses' => 'Payments@postPayment',
-  'as' => 'payment'
+  'as' => 'payment',
+  'middleware' => 'auth'
 ]);
 
 Route::get('/member-page', [

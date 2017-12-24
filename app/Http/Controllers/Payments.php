@@ -52,7 +52,7 @@ class Payments extends Controller
         return redirect()->route('payment')
           ->with('warning', $e->getMessage());
     }
-    return redirect()->route('profile')
+    return redirect()->route('profile', ['user_id'=>$user_id])
       ->with('success', 'Payment Accepted, You Now Have VIP Privileges');
   }
 
