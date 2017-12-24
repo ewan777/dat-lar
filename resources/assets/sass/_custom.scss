@@ -1,1 +1,19 @@
-//Custom styles
+//profile carousel
+#carousel_heading{
+  // background-color: transparentize(#f5f8fa, 0.33);
+  background-color: transparentize(#ccc, 0.33);
+  border-radius: 2px;
+  display: inline-block;
+  padding: 5px 5px;
+  color:  #333333;
+  font-size: 25px;
+  font-weight: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-shadow: #fff 0px 1px 1px;
+}
+#carousel_text{
+  @extend #carousel_heading;
+  font-size: 15px;
+  padding: 3px 3px;
+}

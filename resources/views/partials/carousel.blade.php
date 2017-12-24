@@ -18,10 +18,10 @@
         alt="">
       <div class="container">
         <div class="carousel-caption">
-          <p><h4> {{ $user_profile->username }} </h4></p>
+          <h4 id="carousel_heading"> {{ $user_profile->username }} </h4>
           <br>
-          <p>
-            <a class="btn btn-sm btn-primary" href="#" role="button">My Profile</a>
+          <p id="carousel_text">
+            Nationality: {{ $user_profile->nationality }}
           </p>
           <br>
         </div> <!-- end caption -->
