@@ -145,13 +145,13 @@ Route::group(['prefix'=>'profile'], function(){
 
 Route::group(['prefix'=>'message'], function(){
 
-  Route::get('/{to_user_id}/new', [
+  Route::get('/{receiver_id}/new', [
     'uses'       => 'Messages@getMessage',
     'as'         => 'new_message',
     'middleware' => 'member'
   ]);
 
-  Route::post('/{to_user_id}/new', [
+  Route::post('/{receiver_id}/new', [
     'uses'       => 'Messages@postMessage',
     'as'         => 'send_message',
     'middleware' => 'member'
@@ -160,6 +160,24 @@ Route::group(['prefix'=>'message'], function(){
   Route::get('/{user_id}/sent', [
     'uses'       => 'Messages@sentMessages',
     'as'         => 'sent_messages',
+    'middleware' => 'member'
+  ]);
+
+  Route::get('/{user_id}/my-messages', [
+    'uses'       => 'Messages@myMessages',
+    'as'         => 'my_messages',
+    'middleware' => 'member'
+  ]);
+
+  Route::get('/{message_id}', [
+    'uses'       => 'Messages@getReply',
+    'as'         => 'get_reply',
+    'middleware' => 'member'
+  ]);
+
+  Route::post('/{receiver_id}', [
+    'uses'       => 'Messages@postReply',
+    'as'         => 'post_reply',
     'middleware' => 'member'
   ]);
 

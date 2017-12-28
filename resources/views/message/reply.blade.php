@@ -4,7 +4,7 @@
 <div class="row">
 <div class="col-md-6 col-md-offset-3">
   <h1 class="text-center">
-    Send New Message
+    Reply To Message
   </h1>
   <hr>
 
@@ -19,8 +19,18 @@
     </div>
   @endif
 
-  <form class="form" action="{{ route('send_message', $receiver_id) }}" method="post">
+  @if(!is_null($reply_to_message))
+    <div class="well">
+      {{ $reply_to_message->title }}<br>
+      {{ $reply_to_message->body }}
+    </div>
+  @endif
+
+    <form class="form" action="{{ route('post_reply', $receiver_id) }}" method="post">
     {{ csrf_field() }}
+
+    <input type="hidden" name="reply_to_message_id"
+       value="{{ $reply_to_message->id }}" >
 
     <div class="form-group">
       <label for="title">Message Title</label>
@@ -36,7 +46,6 @@
 
   </form>
   <a href="{{ route('member_page') }}" style="position:relative; top:5px;">[cancel]</a>
-
 
 
 </div>

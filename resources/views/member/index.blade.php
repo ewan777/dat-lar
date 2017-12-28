@@ -24,7 +24,9 @@
 </div> <!-- end cols -->
 
 <div class="col-md-6">
-    <a class="btn btn-success" href="{{ route('sent_messages', \Auth::user()->id) }}">Outbox</a>
+  <a class="btn btn-primary" href="{{ route('my_messages', Auth::user()->id) }}">Inbox</a>
+
+  <a class="btn btn-success" href="{{ route('sent_messages', Auth::user()->id) }}">Outbox</a>
 </div> <!-- end cols -->
 
 </div> <!-- end row -->

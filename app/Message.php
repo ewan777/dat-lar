@@ -13,7 +13,7 @@ class Message extends Model
    */
 
   protected $fillable = [
-      'user_id', 'to_user_id', 'receiver', 'title', 'body', 'expires'
+      'sender_id', 'receiver_id', 'replying_to_title', 'replying_to_body', 'receiver', 'sender', 'title', 'body', 'expires'
   ];
 
   public function user(){

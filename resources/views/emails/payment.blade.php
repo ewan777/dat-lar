@@ -9,7 +9,7 @@
   <hr>
 
   <p class="lead">
-    Your payment id is {{ $user->membership->payment_id }}. Please note your membership expires {{$user->membership->expires}}.
+    We have received your payment of 30 USD for one years membership. Please note, your membership expires {{$user->membership->expires}}. Your payment id is {{ $user->membership->payment_id }}.
   </p>
 
 </div>
